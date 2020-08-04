@@ -8,6 +8,6 @@ namespace MatkaLasku.Models
         {
         }
 
-        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
     }
 }

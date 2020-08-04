@@ -22,16 +22,16 @@ namespace MatkaLasku.Controllers
 
         // GET: api/Invoice
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices()
+        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoice()
         {
-            return await _context.Invoices.ToListAsync();
+            return await _context.Invoice.ToListAsync();
         }
 
         // GET: api/Invoice/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Invoice>> GetInvoice(long id)
         {
-            var invoice = await _context.Invoices.FindAsync(id);
+            var invoice = await _context.Invoice.FindAsync(id);
 
             if (invoice == null)
             {
@@ -79,7 +79,7 @@ namespace MatkaLasku.Controllers
         [HttpPost]
         public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
         {
-            _context.Invoices.Add(invoice);
+            _context.Invoice.Add(invoice);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetInvoice", new { id = invoice.Id }, invoice);
@@ -89,13 +89,13 @@ namespace MatkaLasku.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Invoice>> DeleteInvoice(long id)
         {
-            var invoice = await _context.Invoices.FindAsync(id);
+            var invoice = await _context.Invoice.FindAsync(id);
             if (invoice == null)
             {
                 return NotFound();
             }
 
-            _context.Invoices.Remove(invoice);
+            _context.Invoice.Remove(invoice);
             await _context.SaveChangesAsync();
 
             return invoice;
@@ -103,7 +103,7 @@ namespace MatkaLasku.Controllers
 
         private bool InvoiceExists(long id)
         {
-            return _context.Invoices.Any(e => e.Id == id);
+            return _context.Invoice.Any(e => e.Id == id);
         }
     }
 }
