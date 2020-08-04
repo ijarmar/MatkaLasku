@@ -8,5 +8,5 @@ public class Invoice
     public string Recipient { get; set; }
     public string Description { get; set; }
     public int PassengerCount { get; set; }
-    public DateTime Created { get; set; }
+    public DateTime Created { get; set; } = DateTime.UtcNow;
 }

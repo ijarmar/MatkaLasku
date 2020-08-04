@@ -8,8 +8,6 @@ services:
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Salasana123/
-      attach_dbs: '[{"dbName":"MatkaLasku","dbFiles":["/var/opt/mssql/data/MatkaLasku.mdf","/var/opt/mssql/data/MatkaLasku_log.ldf"]}]'
+      TZ: Europe/Helsinki
     ports:
       - 1433:1433
-    volumes:
-      - ./sqldata:/var/opt/mssql/data
