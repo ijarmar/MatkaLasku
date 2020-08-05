@@ -14,7 +14,7 @@ namespace MatkaLasku
 
             using (var scope = host.Services.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<InvoiceContext>();
+                var db = scope.ServiceProvider.GetRequiredService<AppDBContext>();
                 db.Database.Migrate();
             }
 

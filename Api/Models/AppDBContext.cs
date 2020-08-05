@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MatkaLasku.Models
 {
-    public class InvoiceContext : DbContext
+    public class AppDBContext : DbContext
     {
-        public InvoiceContext(DbContextOptions<InvoiceContext> options) : base(options)
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
         }
 

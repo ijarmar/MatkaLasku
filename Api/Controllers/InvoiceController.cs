@@ -13,9 +13,9 @@ namespace MatkaLasku.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        private readonly InvoiceContext _context;
+        private readonly AppDBContext _context;
 
-        public InvoiceController(InvoiceContext context)
+        public InvoiceController(AppDBContext context)
         {
             _context = context;
         }

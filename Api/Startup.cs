@@ -29,7 +29,7 @@ namespace MatkaLasku
         {            
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<InvoiceContext>(opt => opt.UseSqlServer(connectionString));
+            services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(connectionString));
             services.AddControllers();
         }
 
