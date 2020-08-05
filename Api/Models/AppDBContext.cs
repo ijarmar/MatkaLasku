@@ -9,5 +9,14 @@ namespace MatkaLasku.Models
         }
 
         public DbSet<Trip> Trips { get; set; }
+        public DbSet<Company> Companies { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Company>()
+                .HasMany(c => c.Trips)
+                .WithOne(t => t.Company)
+                .IsRequired();
+        }
     }
 }
