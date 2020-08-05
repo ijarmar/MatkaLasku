@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  api:
+    container_name: api
+    build: ./Api
+    environment:
+      TZ: Europe/Helsinki
+    depends_on:
+      - db
+    ports:
+      - 80:80
   db:
     container_name: mssql
     image: mcr.microsoft.com/mssql/server:2017-latest
