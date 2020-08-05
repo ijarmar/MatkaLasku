@@ -29,7 +29,10 @@ namespace MatkaLasku.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(long id)
         {
-            var company = await _context.Companies.FindAsync(id);
+            var company = await _context.Companies
+                .Include(c => c.Trips)
+                .Where(c => c.Id == id)
+                .FirstAsync();
 
             if (company == null)
             {
