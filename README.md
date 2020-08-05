@@ -2,16 +2,9 @@
 
 ## Asennus
 
-#### SQL Server
+#### SQL Server ja rajapinta
 ```sh
 $ docker-compose up -d
-```
-
-#### ASP .NET 3.1 (api)
-```sh
-$ cd Api
-$ dotnet restore
-$ dotnet ef database update
 ```
 
 #### Angular (frontend)
