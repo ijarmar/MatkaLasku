@@ -8,7 +8,7 @@ namespace MatkaLasku.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Invoice",
+                name: "Trips",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -22,14 +22,14 @@ namespace MatkaLasku.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoice", x => x.Id);
+                    table.PrimaryKey("PK_Trips", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Invoice");
+                name: "Trips");
         }
     }
 }

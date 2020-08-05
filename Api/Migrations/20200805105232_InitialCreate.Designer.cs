@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatkaLasku.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20200805095410_InitialCreate")]
+    [Migration("20200805105232_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace MatkaLasku.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Invoice", b =>
+            modelBuilder.Entity("Trip", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace MatkaLasku.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Trips");
                 });
 #pragma warning restore 612, 618
         }

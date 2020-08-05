@@ -11,48 +11,48 @@ namespace MatkaLasku.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InvoiceController : ControllerBase
+    public class TripsController : ControllerBase
     {
         private readonly AppDBContext _context;
 
-        public InvoiceController(AppDBContext context)
+        public TripsController(AppDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Invoice
+        // GET: api/Trips
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoice()
+        public async Task<ActionResult<IEnumerable<Trip>>> GetTrips()
         {
-            return await _context.Invoice.ToListAsync();
+            return await _context.Trips.ToListAsync();
         }
 
-        // GET: api/Invoice/5
+        // GET: api/Trips/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Invoice>> GetInvoice(long id)
+        public async Task<ActionResult<Trip>> GetTrip(long id)
         {
-            var invoice = await _context.Invoice.FindAsync(id);
+            var trip = await _context.Trips.FindAsync(id);
 
-            if (invoice == null)
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            return invoice;
+            return trip;
         }
 
-        // PUT: api/Invoice/5
+        // PUT: api/Trips/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInvoice(long id, Invoice invoice)
+        public async Task<IActionResult> PutTrip(long id, Trip trip)
         {
-            if (id != invoice.Id)
+            if (id != trip.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(invoice).State = EntityState.Modified;
+            _context.Entry(trip).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace MatkaLasku.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!InvoiceExists(id))
+                if (!TripExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace MatkaLasku.Controllers
             return NoContent();
         }
 
-        // POST: api/Invoice
+        // POST: api/Trips
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
+        public async Task<ActionResult<Trip>> PostTrip(Trip trip)
         {
-            _context.Invoice.Add(invoice);
+            _context.Trips.Add(trip);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInvoice", new { id = invoice.Id }, invoice);
+            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
         }
 
-        // DELETE: api/Invoice/5
+        // DELETE: api/Trips/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Invoice>> DeleteInvoice(long id)
+        public async Task<ActionResult<Trip>> DeleteTrip(long id)
         {
-            var invoice = await _context.Invoice.FindAsync(id);
-            if (invoice == null)
+            var trip = await _context.Trips.FindAsync(id);
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            _context.Invoice.Remove(invoice);
+            _context.Trips.Remove(trip);
             await _context.SaveChangesAsync();
 
-            return invoice;
+            return trip;
         }
 
-        private bool InvoiceExists(long id)
+        private bool TripExists(long id)
         {
-            return _context.Invoice.Any(e => e.Id == id);
+            return _context.Trips.Any(e => e.Id == id);
         }
     }
 }

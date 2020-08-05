@@ -19,7 +19,7 @@ namespace MatkaLasku.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Invoice", b =>
+            modelBuilder.Entity("Trip", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace MatkaLasku.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Trips");
                 });
 #pragma warning restore 612, 618
         }

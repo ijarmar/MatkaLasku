@@ -1,6 +1,6 @@
 using System;
 
-public class Invoice
+public class Trip
 {
     public long Id { get; set; }
     public DateTime Departure { get; set; }
