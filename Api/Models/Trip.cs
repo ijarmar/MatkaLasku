@@ -1,11 +1,16 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatkaLasku.Models
 {
     public class Trip
     {
         public long Id { get; set; }
+        public long CompanyId { get; set; }
+        
+        [ForeignKey("CompanyId")]
         public Company Company { get; set; }
+
         public DateTime Departure { get; set; }
         public DateTime Recurrence { get; set; }
         public string Recipient { get; set; }
