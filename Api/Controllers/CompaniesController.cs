@@ -97,7 +97,7 @@ namespace MatkaLasku.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CompanyDTO>> DeleteCompany(long id)
         {
-            var company = await _context.Companies.FindAsync();
+            var company = await _context.Companies.FindAsync(id);
             if (company == null)
             {
                 return NotFound();
