@@ -20,55 +20,53 @@ namespace MatkaLasku.Controllers
 
         // GET: api/Companies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
+        public async Task<ActionResult<IEnumerable<CompanyDTO>>> GetCompanies()
         {
-            return await _context.Companies.ToListAsync();
+            return await _context.Companies
+                .Select(c => CompanyToDTO(c))
+                .ToListAsync();
         }
 
         // GET: api/Companies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Company>> GetCompany(long id)
+        public async Task<ActionResult<CompanyDTO>> GetCompany(long id)
         {
-            var company = await _context.Companies
-                .Include(c => c.Trips)
-                .Where(c => c.Id == id)
-                .FirstAsync();
+            var company = await _context.Companies.FindAsync(id);
 
             if (company == null)
             {
                 return NotFound();
             }
 
-            return company;
+            return CompanyToDTO(company);
         }
 
         // PUT: api/Companies/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompany(long id, Company company)
+        public async Task<IActionResult> PutCompany(long id, CompanyDTO companyDTO)
         {
-            if (id != company.Id)
+            if (id != companyDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(company).State = EntityState.Modified;
+            var company = await _context.Companies.FindAsync(id);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            company.Name = companyDTO.Name;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!CompanyExists(id))
             {
-                if (!CompanyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -78,17 +76,26 @@ namespace MatkaLasku.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Company>> PostCompany(Company company)
+        public async Task<ActionResult<CompanyDTO>> PostCompany(CompanyDTO companyDTO)
         {
+            var company = new Company()
+            {
+                Name = companyDTO.Name
+            };
+
             _context.Companies.Add(company);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCompany", new { id = company.Id }, company);
+            return CreatedAtAction(
+                nameof(GetCompany), 
+                new { id = company.Id }, 
+                CompanyToDTO(company)
+            );
         }
 
         // DELETE: api/Companies/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Company>> DeleteCompany(long id)
+        public async Task<ActionResult<CompanyDTO>> DeleteCompany(long id)
         {
             var company = await _context.Companies.FindAsync();
             if (company == null)
@@ -99,12 +106,19 @@ namespace MatkaLasku.Controllers
             _context.Companies.Remove(company);
             await _context.SaveChangesAsync();
 
-            return company;
+            return CompanyToDTO(company);
         }
 
         private bool CompanyExists(long id)
         {
             return _context.Companies.Any(e => e.Id == id);
         }
+
+        private static CompanyDTO CompanyToDTO(Company company) =>
+            new CompanyDTO
+            {
+                Id = company.Id,
+                Name = company.Name,
+            }; 
     }
 }
