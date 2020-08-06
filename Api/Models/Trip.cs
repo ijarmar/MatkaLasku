@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatkaLasku.Models
@@ -20,5 +21,7 @@ namespace MatkaLasku.Models
         public string LocationDestination { get; set; }
         public string Description { get; set; }
         public int PassengerCount { get; set; }
+
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }
