@@ -142,6 +142,10 @@ namespace MatkaLasku.Controllers
                 Departure = trip.Departure,
                 Recurrence = trip.Recurrence,
                 Recipient = trip.Recipient,
+                Purpose = trip.Purpose,
+                DistanceInKM = trip.DistanceInKM,
+                LocationDeparture = trip.LocationDeparture,
+                LocationDestination = trip.LocationDestination,
                 Description = trip.Description,
                 PassengerCount = trip.PassengerCount
             };
