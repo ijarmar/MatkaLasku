@@ -64,6 +64,10 @@ namespace MatkaLasku.Controllers
             trip.Departure = tripDTO.Departure;
             trip.Recurrence = tripDTO.Recurrence;
             trip.Recipient = tripDTO.Recipient;
+            trip.Purpose = tripDTO.Purpose;
+            trip.DistanceInKM = tripDTO.DistanceInKM;
+            trip.LocationDeparture = tripDTO.LocationDeparture;
+            trip.LocationDestination = tripDTO.LocationDestination;
             trip.Description = tripDTO.Description;
             trip.PassengerCount = tripDTO.PassengerCount;
 
@@ -91,6 +95,10 @@ namespace MatkaLasku.Controllers
                 Departure = tripDTO.Departure,
                 Recurrence = tripDTO.Recurrence,
                 Recipient = tripDTO.Recipient,
+                Purpose = tripDTO.Purpose,
+                DistanceInKM = tripDTO.DistanceInKM,
+                LocationDeparture = tripDTO.LocationDeparture,
+                LocationDestination = tripDTO.LocationDestination,
                 Description = tripDTO.Description,
                 PassengerCount = tripDTO.PassengerCount
             };
