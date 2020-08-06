@@ -6,6 +6,6 @@ namespace MatkaLasku.Models
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Trip> Trips { get; set; }
+        public virtual ICollection<Trip> Trips { get; set; }
     }
 }

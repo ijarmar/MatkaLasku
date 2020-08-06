@@ -9,7 +9,7 @@ namespace MatkaLasku.Models
         public long CompanyId { get; set; }
         
         [ForeignKey("CompanyId")]
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
 
         public DateTime Departure { get; set; }
         public DateTime Recurrence { get; set; }
