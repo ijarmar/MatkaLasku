@@ -22,14 +22,16 @@ namespace MatkaLasku.Controllers
 
         // GET: api/Trips
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trip>>> GetTrips()
+        public async Task<ActionResult<IEnumerable<TripDTO>>> GetTrips()
         {
-            return await _context.Trips.ToListAsync();
+            return await _context.Trips
+                .Select(t => TripToDTO(t))
+                .ToListAsync();
         }
 
         // GET: api/Trips/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Trip>> GetTrip(long id)
+        public async Task<ActionResult<TripDTO>> GetTrip(long id)
         {
             var trip = await _context.Trips.FindAsync(id);
 
@@ -38,36 +40,40 @@ namespace MatkaLasku.Controllers
                 return NotFound();
             }
 
-            return trip;
+            return TripToDTO(trip);
         }
 
         // PUT: api/Trips/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTrip(long id, Trip trip)
+        public async Task<IActionResult> PutTrip(long id, TripDTO tripDTO)
         {
-            if (id != trip.Id)
+            if (id != tripDTO.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(trip).State = EntityState.Modified;
+            var trip = await _context.Trips.FindAsync(id);
+            if (trip == null)
+            {
+                return NotFound();
+            }
+
+            trip.CompanyId = tripDTO.CompanyId;
+            trip.Departure = tripDTO.Departure;
+            trip.Recurrence = tripDTO.Recurrence;
+            trip.Recipient = tripDTO.Recipient;
+            trip.Description = tripDTO.Description;
+            trip.PassengerCount = tripDTO.PassengerCount;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!TripExists(id))
             {
-                if (!TripExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -77,17 +83,31 @@ namespace MatkaLasku.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Trip>> PostTrip(Trip trip)
+        public async Task<ActionResult<TripDTO>> PostTrip(TripDTO tripDTO)
         {
+            var trip = new Trip()
+            {
+                CompanyId = tripDTO.CompanyId,
+                Departure = tripDTO.Departure,
+                Recurrence = tripDTO.Recurrence,
+                Recipient = tripDTO.Recipient,
+                Description = tripDTO.Description,
+                PassengerCount = tripDTO.PassengerCount
+            };
+
             _context.Trips.Add(trip);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
+            return CreatedAtAction(
+                nameof(GetTrip), 
+                new { id = trip.Id }, 
+                TripToDTO(trip)
+            );
         }
 
         // DELETE: api/Trips/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Trip>> DeleteTrip(long id)
+        public async Task<ActionResult<TripDTO>> DeleteTrip(long id)
         {
             var trip = await _context.Trips.FindAsync(id);
             if (trip == null)
@@ -98,12 +118,24 @@ namespace MatkaLasku.Controllers
             _context.Trips.Remove(trip);
             await _context.SaveChangesAsync();
 
-            return trip;
+            return TripToDTO(trip);
         }
 
         private bool TripExists(long id)
         {
             return _context.Trips.Any(e => e.Id == id);
         }
+
+        private static TripDTO TripToDTO(Trip trip) =>
+            new TripDTO()
+            {
+                Id = trip.Id,
+                CompanyId = trip.CompanyId,
+                Departure = trip.Departure,
+                Recurrence = trip.Recurrence,
+                Recipient = trip.Recipient,
+                Description = trip.Description,
+                PassengerCount = trip.PassengerCount
+            };
     }
 }
