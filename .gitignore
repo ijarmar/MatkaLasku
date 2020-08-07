@@ -4,6 +4,8 @@
 # php vendor
 vendor/
 
+_output/
+
 # User-specific files
 *.suo
 *.user
