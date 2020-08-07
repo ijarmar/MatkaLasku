@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,11 +23,17 @@ namespace MatkaLasku.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<InvoiceDTO>> GetInvoiceById(long id)
         {
-            return await _context.Trips
+            var trip = await _context.Trips
                 .Where(t => t.Id == id)
                 .Include(t => t.Company)
-                .Select(t => ToInvoiceDTO(t, t.Company))
-                .FirstAsync();
+                .FirstOrDefaultAsync(CancellationToken.None);
+
+            if (trip == null)
+            {
+                return NotFound();
+            }
+
+            return ToInvoiceDTO(trip, trip.Company);
         }
 
         // GET: api/Invoices/Company/2
