@@ -15,11 +15,13 @@ namespace MatkaLasku.Models
         public string LocationDestination { get; set; }
         public string Description { get; set; }
         public int PassengerCount { get; set; }
-        public double KMAllowanceUnit { get; set; }
-        public double KMAllowanceTotal { get; set; }
-        public double DailBenefitUnit { get; set; }
-        public double TotalDailyBenefit { get; set; }
-        public double Total { get; set; } 
+        public decimal KMAllowanceUnit { get; set; }
+        public decimal KMAllowanceTotal { get; set; }
+        public decimal PartDayBenefit { get; set; }
+        public decimal FullDayBenefit { get; set; }
+        public decimal TotalFullDaysBenefit { get; set; }
+        public decimal TotalDayBenefit { get; set; }
+        public decimal Total { get; set; } 
         public DateTime Created { get; set; }
     }
 }
