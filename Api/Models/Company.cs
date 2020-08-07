@@ -7,6 +7,5 @@ namespace MatkaLasku.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Trip> Trips { get; set; }
-        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

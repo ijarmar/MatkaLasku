@@ -21,7 +21,6 @@ namespace MatkaLasku.Models
         public string LocationDestination { get; set; }
         public string Description { get; set; }
         public int PassengerCount { get; set; }
-
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public DateTime Created { get; set; } = DateTime.UtcNow;
     }
 }
