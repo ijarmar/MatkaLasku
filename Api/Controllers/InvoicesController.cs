@@ -18,8 +18,19 @@ namespace MatkaLasku.Controllers
             _context = context;
         }
 
-        // GET: api/Invoices/2
-        [HttpGet("{CompanyId}")]
+        // GET: api/Invoices/3
+        [HttpGet("{id}")]
+        public async Task<ActionResult<InvoiceDTO>> GetInvoiceById(long id)
+        {
+            return await _context.Trips
+                .Where(t => t.Id == id)
+                .Include(t => t.Company)
+                .Select(t => ToInvoiceDTO(t, t.Company))
+                .FirstAsync();
+        }
+
+        // GET: api/Invoices/Company/2
+        [HttpGet("Company/{CompanyId}")]
         public async Task<ActionResult<IEnumerable<InvoiceDTO>>> GetInvoicesByCompanyId(long CompanyId)
         {
             return await _context.Trips
