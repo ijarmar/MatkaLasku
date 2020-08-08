@@ -36,17 +36,66 @@ class InvoiceCest
     }
 
     /**
-     * @example { "km": 100, "passengerCount": 1, "kmAllowanceUnit": 0.46 }
+	 * @example { "passengerCount": 1, "kmAllowanceUnit": 0.46 }
+	 * @example { "passengerCount": 0, "kmAllowanceUnit": 0.43 }
+	 * @example { "passengerCount": 10, "kmAllowanceUnit": 0.73 }
      */
     public function InvoiceKMAllowanceUnitIsCorrect(\ApiTester $I, \Codeception\Example $example)
     {
-        $I->sendGET("/Invoices/$this->tripId");
+		$I->haveHttpHeader('Content-Type', 'application/json');
+		$I->sendPost('/Trips', [
+			'companyId' => $this->companyId,
+			'departure' => date_format(new DateTime('5 Aug 2020 11:00:00'), 'c'),
+			'recurrence' => date_format(new DateTime('5 Aug 2020 12:00:00'), 'c'),
+			'recipient' => 'John Doe',
+			'purpose' => 'Work Trip',
+			'distanceInKM' => 100,
+			'locationDeparture' => 'Hämeenlinna',
+			'locationDestination' => 'Helsinki',
+			'description' => 'moro',
+			'passengerCount' => $example['passengerCount']
+		]);
+
+		$tripId = json_decode($I->grabResponse(), true)['id'];
+
+		$I->sendGET("/Invoices/$tripId");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
-            'distanceInKM' => $example['km'],
             'passengerCount' => $example['passengerCount'],
             'kmAllowanceUnit' => $example['kmAllowanceUnit']
         ]);
-    }
+	}
+
+	/**
+	 * @example { "km": 100, "count": 0, "total": 43.00 }
+	 * @example { "km": 200, "count": 0, "total": 86.00 }
+	 * @example { "km": 100, "count": 1, "total": 46.00 }
+	 * @example { "km": 200, "count": 1, "total": 92.00 }
+	 */
+	public function InvoiceKMAllowanceTotalIsCorrect(\ApiTester $I, \Codeception\Example $example)
+	{	
+		$I->haveHttpHeader('Content-Type', 'application/json');
+		$I->sendPost('/Trips', [
+			'companyId' => $this->companyId,
+			'departure' => date_format(new DateTime('5 Aug 2020 11:00:00'), 'c'),
+			'recurrence' => date_format(new DateTime('5 Aug 2020 12:00:00'), 'c'),
+			'recipient' => 'John Doe',
+			'purpose' => 'Work Trip',
+			'distanceInKM' => $example['km'],
+			'locationDeparture' => 'Hämeenlinna',
+			'locationDestination' => 'Helsinki',
+			'description' => 'moro',
+			'passengerCount' => $example['count']
+		]);
+		
+		$tripId = json_decode($I->grabResponse(), true)['id'];
+
+		$I->sendGET("/Invoices/$tripId");
+		$I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+		$I->seeResponseIsJson();
+		$I->seeResponseContainsJson([
+			'kmAllowanceTotal' => $example['total']
+		]);
+	}
 }
