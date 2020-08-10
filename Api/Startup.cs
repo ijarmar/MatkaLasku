@@ -32,6 +32,8 @@ namespace MatkaLasku
             services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(connectionString));
             services.AddControllers().AddNewtonsoftJson(opt => 
             opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +43,10 @@ namespace MatkaLasku
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MatkaLasku"));
 
             app.UseHttpsRedirection();
 
