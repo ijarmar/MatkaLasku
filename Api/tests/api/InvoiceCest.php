@@ -97,5 +97,37 @@ class InvoiceCest
 		$I->seeResponseContainsJson([
 			'kmAllowanceTotal' => $example['total']
 		]);
-	}
+    }
+ 
+    /**
+     * @example { "d":"2020-08-05T11:00:00+02:00", "r":"2020-08-05T16:00:00+02:00", "total": 0.0 }
+     * @example { "d":"2020-08-05T11:00:00+02:00", "r":"2020-08-05T18:00:00+02:00", "total": 20.0 }
+     * @example { "d":"2020-08-05T11:00:00+02:00", "r":"2020-08-06T11:00:00+02:00", "total": 43.0 }
+     * @example { "d":"2020-08-05T11:00:00+02:00", "r":"2020-08-06T13:00:00+02:00", "total": 63.0 }
+     */
+    public function InvoiceDayBenefitTotalIsCorrect(\ApiTester $I, \Codeception\Example $example)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+		$I->sendPost('/Trips', [
+			'companyId' => $this->companyId,
+			'departure' => $example['d'],
+			'recurrence' => $example['r'],
+			'recipient' => 'John Doe',
+			'purpose' => 'Work Trip',
+			'distanceInKM' => 100,
+			'locationDeparture' => 'Hämeenlinna',
+			'locationDestination' => 'Helsinki',
+			'description' => 'asdf',
+			'passengerCount' => 1
+		]);
+		
+		$tripId = json_decode($I->grabResponse(), true)['id'];
+
+        $I->sendGET("/Invoices/$tripId");
+		$I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+		$I->seeResponseIsJson();
+		$I->seeResponseContainsJson([
+			'totalDayBenefit' => $example['total']
+		]);
+    }
 }
