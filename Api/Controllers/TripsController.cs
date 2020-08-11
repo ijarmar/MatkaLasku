@@ -21,7 +21,7 @@ namespace MatkaLasku.Controllers
         }
 
         // GET: api/Trips
-        [HttpGet]
+        [HttpGet(Name = nameof(GetTrips))]
         public async Task<ActionResult<IEnumerable<TripDTO>>> GetTrips()
         {
             return await _context.Trips
@@ -30,7 +30,7 @@ namespace MatkaLasku.Controllers
         }
 
         // GET: api/Trips/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetTrip))]
         public async Task<ActionResult<TripDTO>> GetTrip(long id)
         {
             var trip = await _context.Trips.FindAsync(id);
@@ -46,7 +46,7 @@ namespace MatkaLasku.Controllers
         // PUT: api/Trips/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = nameof(PutTrip))]
         public async Task<IActionResult> PutTrip(long id, TripDTO tripDTO)
         {
             if (id != tripDTO.Id)
@@ -86,7 +86,7 @@ namespace MatkaLasku.Controllers
         // POST: api/Trips
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost(Name = nameof(PostTrip))]
         public async Task<ActionResult<TripDTO>> PostTrip(TripDTO tripDTO)
         {
             var trip = new Trip()
@@ -114,7 +114,7 @@ namespace MatkaLasku.Controllers
         }
 
         // DELETE: api/Trips/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = nameof(DeleteTrip))]
         public async Task<ActionResult<TripDTO>> DeleteTrip(long id)
         {
             var trip = await _context.Trips.FindAsync(id);

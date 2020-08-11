@@ -19,7 +19,7 @@ namespace MatkaLasku.Controllers
         }
 
         // GET: api/Companies
-        [HttpGet]
+        [HttpGet(Name = nameof(GetCompanies))]
         public async Task<ActionResult<IEnumerable<CompanyDTO>>> GetCompanies()
         {
             return await _context.Companies
@@ -44,7 +44,7 @@ namespace MatkaLasku.Controllers
         // PUT: api/Companies/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = nameof(PutCompany))]
         public async Task<IActionResult> PutCompany(long id, CompanyDTO companyDTO)
         {
             if (id != companyDTO.Id)
@@ -75,7 +75,7 @@ namespace MatkaLasku.Controllers
         // POST: api/Companies
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost(Name = nameof(PostCompany))]
         public async Task<ActionResult<CompanyDTO>> PostCompany(CompanyDTO companyDTO)
         {
             var company = new Company()
@@ -94,7 +94,7 @@ namespace MatkaLasku.Controllers
         }
 
         // DELETE: api/Companies/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = nameof(DeleteCompany))]
         public async Task<ActionResult<CompanyDTO>> DeleteCompany(long id)
         {
             var company = await _context.Companies.FindAsync(id);

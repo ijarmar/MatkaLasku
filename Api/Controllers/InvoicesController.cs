@@ -20,7 +20,7 @@ namespace MatkaLasku.Controllers
         }
 
         // GET: api/Invoices/3
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetInvoiceById))]
         public async Task<ActionResult<InvoiceDTO>> GetInvoiceById(long id)
         {
             var trip = await _context.Trips
@@ -37,7 +37,7 @@ namespace MatkaLasku.Controllers
         }
 
         // GET: api/Invoices/Company/2
-        [HttpGet("Company/{CompanyId}")]
+        [HttpGet("Company/{CompanyId}", Name = nameof(GetInvoicesByCompanyId))]
         public async Task<ActionResult<IEnumerable<InvoiceDTO>>> GetInvoicesByCompanyId(long CompanyId)
         {
             return await _context.Trips
