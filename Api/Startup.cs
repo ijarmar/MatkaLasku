@@ -33,6 +33,15 @@ namespace MatkaLasku
             services.AddControllers().AddNewtonsoftJson(opt => 
             opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            // do not use in production
+            services.AddCors(o => o.AddPolicy("AppPolicy", builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             services.AddSwaggerGen();
         }
 
@@ -43,6 +52,9 @@ namespace MatkaLasku
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // do not use in production
+            app.UseCors("AppPolicy");
 
             app.UseSwagger();
 
