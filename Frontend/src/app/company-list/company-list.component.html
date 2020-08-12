@@ -1,3 +1,21 @@
+<ng-template #content let-modal>
+    <div class='modal-header'>
+        <h4 class='modal-title'>Lisää uusi yritys</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class='modal-body'>
+        <form>
+            <div class='form-group'>
+                <label for='companyName'>Nimi</label>
+                <input [(ngModel)]='company.name' id='companyName' name='name' class='form-control' placeholder='Yrityksen Nimi'>
+            </div>
+            <button class="btn btn-primary" (click)="onSubmit(company); modal.close('Save click')" type="button">Lisää</button>
+        </form>
+    </div>
+</ng-template>
+
 <div class='card'>
     <div class='card-body'>
         <h5 class='card-title'>Yritykset</h5>
@@ -7,6 +25,6 @@
                 <a href="/company/{{company.id}}">Näytä Matkat</a>
             </li>
         </ul>
-        <a href='#' class='btn btn-primary mt-3'>Lisää</a>
+        <button class='btn btn-primary mt-3' (click)="open(content)">Lisää</button>
     </div>
 </div>
