@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TripsService, TripDTO } from 'matkalasku-api-client';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-new-trip-form',
@@ -6,6 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-trip-form.component.css']
 })
 export class NewTripFormComponent implements OnInit {
+  trip: TripDTO = {
+    companyId: 0,
+    departure: new Date(),
+    recurrence: new Date(),
+    recipient: '',
+    purpose: '',
+    distanceInKM: 0,
+    locationDeparture: '',
+    locationDestination: '',
+    description: '',
+    passengerCount: 0
+  };
+  departureDate: NgbDateStruct;
+  recurrenceDate: NgbDateStruct;
 
   constructor() { }
 
