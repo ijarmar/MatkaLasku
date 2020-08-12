@@ -1,0 +1,11 @@
+<div class='card'>
+    <div class='card-body'>
+        <h5 class='card-title'>Yritykset</h5>
+        <ul class='list-group'>
+            <li *ngFor='let company of companies' class='list-group-item'>
+                {{company.name}}
+            </li>
+        </ul>
+        <a href='#' class='btn btn-primary mt-3'>Lisää</a>
+    </div>
+</div>

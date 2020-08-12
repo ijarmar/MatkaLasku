@@ -1,17 +1,7 @@
 <div class='container'>
   <div class='row mt-5'>
     <div class='col d-flex justify-content-center'>
-      <div class='card' style='width: 100%'>
-        <div class='card-body'>
-          <h5 class='card-title'>Yritykset</h5>
-          <ul class='list-group'>
-            <li *ngFor='let company of companies' class='list-group-item'>
-              {{company.name}}
-            </li>
-          </ul>
-          <a href='#' class='btn btn-primary mt-3'>Lisää</a>
-        </div>
-      </div>
+      <app-company-list style='width: 100%'></app-company-list>
     </div>
     <div class='col d-flex justify-content-center'>
       <div class='card' style='width: 100%'>

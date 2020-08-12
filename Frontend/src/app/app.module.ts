@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiModule, BASE_PATH } from 'matkalasku-api-client';
 import { environment } from '../environments/environment';
+import { CompanyListComponent } from './company-list/company-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompanyListComponent
   ],
   imports: [
     BrowserModule,
