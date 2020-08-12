@@ -1,13 +1,13 @@
-<div class='card' style='width: 100%'>
+<div class='card'>
     <div class='card-body'>
         <h5 class='card-title'>Matkat</h5>
         <ul class='list-group'>
             <li *ngFor='let trip of trips' class='list-group-item'>
-                {{trip.recipient}} - 
-                {{trip.recurrence | date: 'medium'}} - 
+                {{trip.recipient}} -
+                {{trip.recurrence | date: 'medium'}} -
                 <a href="/invoice/{{trip.id}}">Näytä Lasku</a>
             </li>
         </ul>
-        <a href='#' class='btn btn-primary mt-3'>Lisää</a>
+        <a href='/trip/add' class='btn btn-primary mt-3'>Lisää</a>
     </div>
 </div>

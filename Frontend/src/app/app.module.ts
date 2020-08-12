@@ -12,10 +12,12 @@ import { environment } from '../environments/environment';
 
 import { CompanyListComponent } from './company-list/company-list.component';
 import { TripListComponent } from './trip-list/trip-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     CompanyListComponent,
     TripListComponent
   ],
@@ -28,6 +30,6 @@ import { TripListComponent } from './trip-list/trip-list.component';
     NgbModule
   ],
   providers: [{ provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, HomeComponent]
 })
 export class AppModule { }
