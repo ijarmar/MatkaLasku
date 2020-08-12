@@ -3,7 +3,8 @@
         <h5 class='card-title'>Yritykset</h5>
         <ul class='list-group'>
             <li *ngFor='let company of companies' class='list-group-item'>
-                {{company.name}}
+                {{company.name}} -
+                <a href="/company/{{company.id}}">Näytä Matkat</a>
             </li>
         </ul>
         <a href='#' class='btn btn-primary mt-3'>Lisää</a>
