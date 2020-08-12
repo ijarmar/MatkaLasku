@@ -22,10 +22,15 @@ export class NewTripFormComponent implements OnInit {
   };
   departureDate: NgbDateStruct;
   recurrenceDate: NgbDateStruct;
+  departureTime: object = { hour: 10, minute: 0 };
+  recurrenceTime: object = { hour: 11, minute: 30 };
 
-  constructor() { }
+  constructor(tripsService: TripsService) {}
 
-  ngOnInit(): void {
+  onSubmit(trip: TripDTO): void {
+    
   }
+
+  ngOnInit(): void {}
 
 }
