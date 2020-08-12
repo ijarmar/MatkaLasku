@@ -27,6 +27,7 @@ export class CompanyListComponent implements OnInit {
   onSubmit(company: CompanyDTO): void {
     this.companiesService.postCompany(company).subscribe(c => {
       this.companies.push(c);
+      this.company.name = '';
     })
   }
 
