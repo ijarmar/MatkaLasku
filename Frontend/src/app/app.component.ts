@@ -7,17 +7,11 @@ import { CompaniesService, CompanyDTO } from 'matkalasku-api-client';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Frontend';
+  companies: CompanyDTO[] = [];
 
-  constructor(companiesService: CompaniesService) {
-    var company: CompanyDTO = {
-      name: 'Nettifixium'
-    };
-
-    companiesService
-      .postCompany(company)
-      .subscribe(console.log);
-
-    companiesService.getCompanies().subscribe(console.log);
+  constructor(private companiesService: CompaniesService) {
+    this.companiesService.getCompanies().subscribe(companies => {
+      this.companies.push(...companies);
+    });
   }
 }
