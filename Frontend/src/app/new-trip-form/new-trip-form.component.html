@@ -1,1 +1,11 @@
-<p>new-trip-form works!</p>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Yritys
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li class="dropdown-item" *ngFor="let company of companies">
+            <span (click)="OnSelect(company)">{{company.name}}</span>
+        </li>
+    </div>
+</div>
